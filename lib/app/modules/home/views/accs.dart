@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../controllers/storage.dart';
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
@@ -13,6 +15,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String _pinResult = "";
   TextEditingController authCode = TextEditingController();
   TextEditingController refKey = TextEditingController();
+  var deneme = box.read("authKey");
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +28,10 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 18.0, vertical: 5),
+                child: Text("data: ${deneme}")),
+            /* Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 18.0, vertical: 5),
               child: TextField(
@@ -37,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 style: const TextStyle(color: Colors.black),
               ),
-            ),
+            ), */
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 18.0, vertical: 5),
@@ -55,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ElevatedButton(
                 onPressed: () {
                   setState(() {
-                    _pinResult = getPinCode(authCode.text, refKey.text);
+                    _pinResult = getPinCode(deneme, refKey.text);
                   });
                 },
                 child: const Text("Kod Üret")),

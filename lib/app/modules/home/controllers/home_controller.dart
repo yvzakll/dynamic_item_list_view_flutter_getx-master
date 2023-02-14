@@ -1,17 +1,23 @@
 import 'dart:convert';
 
 import 'package:dynamic_item_list_view_flutter_getx/app/data/model/employee_model.dart';
+import 'package:dynamic_item_list_view_flutter_getx/app/modules/home/controllers/storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class HomeController extends GetxController {
-  Rx<List<EmployeeModel>> employees = Rx<List<EmployeeModel>>([]);
+  Rx<List<ServerModel>> servers = Rx<List<ServerModel>>([]);
   TextEditingController nameTextEditingController = TextEditingController();
   TextEditingController addressTextEditingController = TextEditingController();
-  late EmployeeModel employeeModel;
+  late ServerModel employeeModel;
   var itemCount = 0.obs;
+
   @override
-  void onInit() {
+  void onInit() async {
+    box.read("name");
+    box.read("authKey");
+    box.read("count");
     super.onInit();
   }
 
@@ -28,15 +34,22 @@ class HomeController extends GetxController {
   }
 
   addEmployee(String name, String address) {
-    employeeModel = EmployeeModel(name: name, address: address);
-    employees.value.add(employeeModel);
-    itemCount.value = employees.value.length;
+    employeeModel = ServerModel(name: name, auth: address);
+    servers.value.add(employeeModel);
+    itemCount.value = servers.value.length;
     nameTextEditingController.clear();
     addressTextEditingController.clear();
+    box.listen(() {
+      print(box.read("name"));
+      print(box.read("authKey"));
+    });
+    box.save();
   }
 
   removeEmployee(int index) {
-    employees.value.removeAt(index);
-    itemCount.value = employees.value.length;
+    servers.value.removeAt(index);
+    itemCount.value = servers.value.length;
+    box.remove("name");
+    box.remove("authKey");
   }
 }

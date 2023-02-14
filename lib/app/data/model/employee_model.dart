@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 
-class EmployeeModel {
-  
+class ServerModel {
   final String? name;
-final String? address;
+  final String? auth;
 
-  EmployeeModel(
-      {@required this.name,
-      @required this.address,
-      });
-
-      
+  ServerModel({
+    @required this.name,
+    @required this.auth,
+  });
 }
